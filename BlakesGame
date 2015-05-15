@@ -1,0 +1,801 @@
+import java.awt.event.*; 
+import java.applet.*;
+import java.awt.*;
+import java.awt.Color;
+import java.util.Random;
+
+public class BlakesGame extends Applet implements MouseListener, KeyListener
+{
+	private Graphics backg;
+	private Image backbuffer;
+	private boolean mouseDown;
+	private int ballX;
+	private int Screen = 0;
+	private int ballY;
+	private int Food1X;
+	private int Food1Y;
+	private boolean Right;
+	private boolean Left;
+	private boolean Up;
+	private boolean Down;
+	private boolean level1= false;
+	private boolean level2 = false;
+	private boolean level3 = false;
+	private boolean level4 = false;
+	private boolean level5 = false;
+	private boolean level6 = false;
+	private boolean level7 = false;
+	private boolean level8 = false;
+	private boolean level9 = false;
+	private boolean level10 = false;
+	private int moves = 0;
+	private boolean moving = false;
+	private int attack = 0;
+	private int health = 30;
+	private int maxHealth = 30;
+	private int exp = 0;
+	private int needExp = 20;
+	private int level = 1;
+	private int damage = 5;
+	private int offset=5;
+	private int potions = 2;
+	private int gold = 0;
+	private int goldDrop = 8;
+	private int char2attack = 4;
+	private int charattack = 5;
+	private int char2Health = 10;
+	private int char3Health = 10;
+	private int char4Health = 10;
+	private int char5Health = 10;
+	private int cowHealth = 50;
+	private boolean trade = false;
+	private boolean buy = false;
+	private boolean dead = false;
+	private boolean far2 = false;
+	private boolean far3 = false;
+	private boolean far4 = false;
+	private boolean far5 = false;
+	private boolean far6 = false;
+	private boolean far7 = false;
+	private boolean sword = false;
+	private boolean sheild = false;
+	private boolean attackChar2 = false;
+	private boolean attackChar3 = false;
+	private boolean attackChar4 = false;
+	private boolean attackChar5 = false;
+	private boolean attackcow = false;
+	AudioClip LightWorld;
+	AudioClip SwordSound;
+
+public void init()
+{ 
+
+	LightWorld = getAudioClip (getCodeBase() , "LightWorld.au");
+	//LightWorld.play();
+	SwordSound = getAudioClip (getCodeBase() , "SwordSound.au");
+	
+	setFocusable(true);
+	requestFocus();
+	ballX = 120;
+	ballY = 150;
+	Food1X = 90;
+	Food1Y = 120;
+	Right = false;
+	Left = false;
+	Up = false;
+	Down = true;
+	mouseDown = false;
+
+	// we need to add this MouseListener to the Applet
+//	addMouseListener(this);
+
+	addKeyListener(this);
+	addMouseListener(this);
+	// create the backbuffer image that will later be swapped to the screen
+	backbuffer = createImage(getSize().width, getSize().height);
+
+	// get the backbuffer's graphics (canvas) so that we can draw on it.
+	backg = backbuffer.getGraphics();
+	
+}
+// because we are implementing an interface, we must include these:
+public void mouseClicked(MouseEvent e)
+{
+	//attack char2
+	//60, 200
+	if(e.getX() > 60 && e.getX() < 75 && e.getY() > 200 && e.getY() < 220 && char2Health > 0)
+	{
+		far2 = true;
+		if(e.getX() > 60 && e.getX() < 75 && e.getY() > 200 && e.getY() < 220 && ballX > 20 && ballX < 135 && ballY > 160 && ballY < 240 && char2Health > 0)
+		{
+			SwordSound.play();
+			far2 = false;
+			attackChar2 = true;
+			Random randGen = new Random();
+      		attack = randGen.nextInt(char2attack);
+      		damage = randGen.nextInt(charattack);
+     	 	health -= attack;
+      		char2Health -= damage;
+		}
+	}
+	//attack char3
+	//180,310
+	if(e.getX() > 180 && e.getX() < 195 && e.getY() > 310 && e.getY() < 330 && char3Health > 0)
+	{
+		far3 = true;
+		if(e.getX() > 180 && e.getX() < 195 && e.getY() > 310 && e.getY() < 330 && ballX > 140 && ballX < 215 && ballY > 270 && ballY < 350 && char3Health > 0)
+		{
+			SwordSound.play();
+			far3 = false;
+			attackChar3 = true;
+			Random randGen = new Random();
+      		attack = randGen.nextInt(char2attack);
+      		damage = randGen.nextInt(charattack);
+     	 	health -= attack;
+      		char3Health -= damage;
+		}
+	}
+	//attack char4
+	//220,120
+	if(e.getX() > 220 && e.getX() < 235 && e.getY() > 120 && e.getY() < 140 && char4Health > 0)
+	{
+		far4 = true;
+		if(e.getX() > 220 && e.getX() < 235 && e.getY() > 120 && e.getY() < 140 && ballX > 180 && ballX < 255 && ballY > 80 && ballY < 160 && char4Health > 0)
+		{
+			SwordSound.play();
+			far4 = false;
+			attackChar4 = true;
+			Random randGen = new Random();
+      		attack = randGen.nextInt(char2attack);
+      		damage = randGen.nextInt(charattack);
+     	 	health -= attack;
+      		char4Health -= damage;
+		}
+	}
+	//attack char5
+	//40,290
+	if(e.getX() > 40 && e.getX() < 55 && e.getY() > 290 && e.getY() < 310 && char5Health > 0)
+	{
+		far5 = true;
+		if(e.getX() > 40 && e.getX() < 55 && e.getY() > 290 && e.getY() < 310 && ballX > 0 && ballX < 75 && ballY > 250 && ballY < 330 && char5Health > 0)
+		{
+			SwordSound.play();
+			far5 = false;
+			attackChar5 = true;
+			Random randGen = new Random();
+      		attack = randGen.nextInt(char2attack);
+      		damage = randGen.nextInt(charattack);
+     	 	health -= attack;
+      		char5Health -= damage;
+		}
+	}
+	//shop
+		if(e.getX() > 30 && e.getX() < 47 && e.getY() > 110 && e.getY() < 130)
+	{
+		far6 = true;
+		if(e.getX() > 30 && e.getX() < 47 && e.getY() > 110 && e.getY() < 130 && ballX > -10 && ballX < 65 && ballY > 70 && ballY < 150)
+		{
+			trade = true;
+			far6 = false;
+		}
+	}
+	//cow
+	//120,120
+		if(e.getX() > 120 && e.getX() < 137 && e.getY() > 120 && e.getY() < 140 && cowHealth > 0)
+	{
+		far7 = true;
+		if(e.getX() > 120 && e.getX() < 137 && e.getY() > 120 && e.getY() < 140 && ballX > 70 && ballX < 155 && ballY > 30 && ballY < 210 && cowHealth > 0)
+		{
+			SwordSound.play();
+			far7 = false;
+			attackcow = true;
+			Random randGen = new Random();
+      		attack = randGen.nextInt(10);
+      		damage = randGen.nextInt(charattack);
+     	 	health -= attack;
+      		cowHealth -= damage;
+		}
+	}
+		if(e.getX() > 30 && e.getX() < 47 && e.getY() > 110 && e.getY() < 130)
+	{
+		far6 = true;
+		if(e.getX() > 30 && e.getX() < 47 && e.getY() > 110 && e.getY() < 130 && ballX > -10 && ballX < 65 && ballY > 70 && ballY < 150)
+		{
+			trade = true;
+			far6 = false;
+		}
+	}
+	e.consume();
+}
+public void mouseEntered(MouseEvent e)
+{}
+public void mouseExited(MouseEvent e)
+{}
+public void mousePressed(MouseEvent e)
+{
+		mouseDown = true;
+		repaint();
+		e.consume();
+}
+public void mouseReleased(MouseEvent e)
+{
+        mouseDown = false;
+        repaint();
+        e.consume();
+}
+
+public void update(Graphics g)
+{   
+		//Room1
+		Image Wood = getImage(getCodeBase(),"Wood.gif");
+		Image ship = getImage(getCodeBase(),"ship.gif");
+		Image Char1 = getImage(getCodeBase(),"Char1.gif");
+		Image Char1Left = getImage(getCodeBase(),"Char1Left.gif");
+		Image Char1Right = getImage(getCodeBase(),"Char1Right.gif");
+		Image Char1Up = getImage(getCodeBase(),"Char1Up.gif");
+		Image Char2 = getImage(getCodeBase(),"Char2.gif");
+		Image PlainGrass = getImage(getCodeBase(),"PlainGrass.gif");
+		Image floor = getImage(getCodeBase(),"floor.gif");
+		Image door = getImage(getCodeBase(),"door.gif");
+		Image wall = getImage(getCodeBase(),"wall.gif");
+		Image shop = getImage(getCodeBase(),"shop.gif");
+		Image cow1 = getImage(getCodeBase(),"cow1.gif");
+		if(exp < 20)
+		{
+			level = 1;
+			needExp = 20;
+		}
+		if(exp >= 20 && level2 == false )
+		{
+			charattack = 6;
+			level2 = true;
+			level = 2;
+			maxHealth = 35;
+			health = 35;
+			needExp = 40;
+		}
+		if(exp >= 40 && level3 == false)
+		{
+			charattack = 7;
+			level3= true;
+			maxHealth = 40;
+			health = 40;
+			level = 3;
+			needExp = 80;
+		}
+		if(exp >= 80 && level4 == false)
+		{
+			charattack = 8;
+			level4= true;
+			maxHealth = 50;
+			health = 50;
+			level = 4;
+			needExp = 140;
+		}
+		if(exp >= 140 && level5 == false)
+		{
+			charattack = 9;
+			level5= true;
+			maxHealth = 55;
+			health = 55;
+			level = 5;
+			needExp = 200;
+		}
+		if(exp >= 200 && level6 == false)
+		{
+			charattack = 10;
+			level6= true;
+			maxHealth = 60;
+			health = 60;
+			level = 6;
+			needExp = 280;
+		}
+		if(exp >= 280 && level7 == false)
+		{
+			charattack = 11;
+			level7= true;
+			maxHealth = 65;
+			health = 65;
+			level = 7;
+			needExp = 380;
+		}
+		if(exp >= 380 && level8 == false)
+		{
+			charattack = 12;
+			level8= true;
+			maxHealth = 70;
+			health = 70;
+			level = 8;
+			needExp = 500;
+		}
+		if(exp >= 500 && level9 == false)
+		{
+			charattack = 13;
+			level9= true;
+			maxHealth = 75;
+			health = 75;
+			level = 9;
+			needExp = 650;
+		}
+		if(exp >= 650 && level10 == false)
+		{
+			charattack = 14;
+			level10= true;
+			maxHealth = 80;
+			health = 80;
+			level = 10;
+			needExp = 150;
+		}
+		backg.setColor(Color.white);
+		backg.fillRect(0,0,250,100);
+		backg.setColor(Color.blue);
+		backg.fillRect(75,0,100,63);
+		backg.setColor(Color.white);
+		backg.drawString("Health = " + health  , 93, 10);
+		backg.drawString("Level = " + level  , 100, 20);
+		backg.drawString("Exp = " + exp , 105, 30);
+		backg.drawString("Next Level = " + needExp,84, 40);
+		backg.drawString("# of Potions = " + potions,84, 50);
+		backg.drawString("Gold = " + gold,102, 60);
+		if(Screen == 0)
+		{
+//			backg.setColor(Color.green);
+//			int[] xpoints3 = {0,0,250,250};
+//			int[] ypoints3 = {100,110,110,100};
+//			backg.fillPolygon(xpoints3, ypoints3, 4);
+//			int[] xpoints4 = {240,240,250,250};
+//			int[] ypoints4 = {100,350,350,100};
+//			backg.fillPolygon(xpoints4, ypoints4, 4);
+//			int[] xpoints5 = {0,0,10,10};
+//			int[] ypoints5 = {100,350,350,100};
+//			backg.fillPolygon(xpoints5, ypoints5, 4);
+//			int[] xpoints6 = {0,0,110,110};
+//			int[] ypoints6 = {340,350,350,340};
+//			backg.fillPolygon(xpoints6, ypoints6, 4);
+//			int[] xpoints7 = {250,250,140,140};
+//			int[] ypoints7 = {340,350,350,340};
+//			backg.fillPolygon(xpoints7, ypoints7, 4);
+
+			backg.drawImage(floor, 0,100,this);
+			backg.drawImage(wall, 0,100,this);
+			backg.drawImage(door,120,100,this);
+			backg.drawImage(shop,30,110,this);
+			//room exit
+			if(ballX >= 120 && ballX <= 130 && ballY < 110)
+			{
+				Screen += 1;
+				ballY = 330;
+			}
+			if(ballY <= 110)
+			{
+				ballY = 110;
+			}
+			if(ballX <= 0)
+			{
+				ballX = 0;
+			}
+			if(ballX >= 230)
+			{
+				ballX = 230;
+			}
+			if(ballX >= 0 && ballX <= 120 && ballY >= 320)
+			{
+				ballY = 320;
+			}
+			if(ballX >= 130 && ballX <= 250 && ballY >= 320)
+			{
+				ballY = 320;
+			}
+			dead = false;
+			if(trade == true && gold >= 30 )
+			{
+				moving = true;
+				backg.setColor(Color.black);
+				if(moves <= 10)
+				{
+					backg.drawString("Want to buy a potion? press 1" , 50,70);
+					backg.drawString("Want to buy a sword? press 2" , 50,80);
+					backg.drawString("Want to buy a sheild? press 3" , 50,90);
+					backg.drawString("Want to not buy anything? press n" , 50,100);
+					buy = true;
+				}
+				if(moves >= 10)
+				{
+					trade = false;
+					moving = false;
+				}
+				backg.setColor(Color.black);
+				
+			}
+			if(trade == true && gold < 30)
+			{
+				moving = true;
+				backg.setColor(Color.black);
+				if(moves <= 10)
+				{
+					backg.drawString("You dont have enough money" , 10,90);
+					buy = false;
+				}
+				if(moves >= 10)
+				{
+					trade = false;
+					moving = false;
+				}
+			}
+		}
+		if(Screen == 1)
+		{
+			backg.drawImage(PlainGrass, 0,100,this);
+			backg.drawImage(wall, 0,340,this);
+			backg.setColor(Color.black);
+			backg.fillRect(120,340,20,10);
+			if(ballX >= 110 && ballX <= 130 && ballY > 330)
+			{
+				Screen = 0;
+				ballY = 120;
+				char2Health = 10;
+				char3Health = 10;
+				char4Health = 10;
+				char5Health = 10;
+				cowHealth = 50;
+			}
+			if(ballY <= 90)
+			{
+				ballY = 90;
+			}
+			if(ballX <= 0)
+			{
+				ballX = 0;
+			}
+			if(ballX >= 230)
+			{
+				ballX = 230;
+			}
+			if(ballX >= 0 && ballX <= 110 && ballY >= 320)
+			{
+				ballY = 320;
+			}
+			if(ballX >= 130 && ballX <= 250 && ballY >= 320)
+			{
+				ballY = 320;
+			}
+			//char2
+			if(char2Health > 0)
+			{
+				backg.drawImage(Char2,60,200,this);
+			}
+			if(char3Health > 0)
+			{
+				backg.drawImage(Char2,180,310,this);
+			}
+			if(char4Health > 0)
+			{
+				backg.drawImage(Char2,220,120,this);
+			}
+			if(char5Health > 0)
+			{
+				backg.drawImage(Char2,40,290,this);
+			}
+			if(cowHealth > 0)
+			{
+				backg.drawImage(cow1,120,120,this);
+			}
+			if(attackChar2 == true && attackChar2 == true && dead == false)
+			{
+				backg.drawString("" + char2Health ,60, 195);
+      			backg.drawString(""+ health  , ballX, ballY - 5);
+
+      			if(char2Health <= 0)
+      			{
+      				Random randGen = new Random();
+      				gold += randGen.nextInt(goldDrop);
+      				attackChar2 = false;
+      				far2 = false;
+      				exp += 5;
+      			}
+      			if(health <= 0)
+      			{
+      				dead = true;
+      				Screen = 0;
+      				far2 = false;
+      				
+      			}
+			}
+			if(attackChar3 == true && attackChar3 == true && dead == false)
+			{
+				backg.drawString("" + char3Health ,180, 305);
+      			backg.drawString(""+ health  , ballX, ballY - 5);
+
+      			if(char3Health <= 0)
+      			{
+      				Random randGen = new Random();
+      				gold += randGen.nextInt(goldDrop);
+      				attackChar3 = false;
+      				far3 = false;
+      				exp += 5;
+      			}
+      			if(health <= 0)
+      			{
+      				dead = true;
+      				far3 = false;
+      			}
+			}
+			if(attackChar4 == true && attackChar4 == true && dead == false)
+			{
+				backg.drawString("" + char4Health ,220,115);
+      			backg.drawString(""+ health  , ballX, ballY - 5);
+
+      			if(char4Health <= 0)
+      			{
+      				Random randGen = new Random();
+      				gold += randGen.nextInt(goldDrop);
+      				attackChar4 = false;
+      				far4 = false;
+      				exp += 5;
+      			}
+      			if(health <= 0)
+      			{
+      				Random randGen = new Random();
+      				gold += randGen.nextInt(goldDrop);
+      				dead = true;
+      				Screen = 0;
+      				far4 = false;
+      			}
+			}
+			if(attackChar5 == true && attackChar5 == true && dead == false)
+			{
+				backg.drawString("" + char5Health ,40, 285);
+      			backg.drawString(""+ health  , ballX, ballY - 5);
+
+      			if(char5Health <= 0)
+      			{
+      				Random randGen = new Random();
+      				gold += randGen.nextInt(goldDrop);
+      				attackChar5 = false;
+      				far3 = false;
+      				exp += 5;
+      			}
+      			if(health <= 0)
+      			{
+      				dead = true;
+      				Screen = 0;
+      				far5 = false;
+      			}
+			}
+			if(attackcow == true && dead == false)
+			{
+				backg.drawString("" + cowHealth ,120, 115);
+      			backg.drawString(""+ health  , ballX, ballY - 5);
+
+      			if(cowHealth <= 0)
+      			{
+      				Random randGen = new Random();
+      				gold += randGen.nextInt(60);
+      				attackcow = false;
+      				far7 = false;
+      				exp += 80;
+      			}
+      			if(health <= 0)
+      			{
+      				dead = true;
+      				Screen = 0;
+      				far7 = false;
+      			}
+			}
+		}
+		if(far2 == true || far3 == true || far4 == true || far5 == true || far6 == true || far7 == true)
+		{
+			moving = true;
+			backg.setColor(Color.black);
+			if(moves <= 10)
+			{
+				backg.drawString("You are too far away!"  , 68, 90);
+			}
+			if(moves >= 10)
+			{
+				moving = false;
+				far2 = false;
+				far3 = false;
+				far4 = false;
+				far5 = false;
+				far6 = false;
+			}
+		}
+		if(dead == true)
+		{
+			health = 30;
+			Screen = 0;
+			char2Health = 10;
+			char3Health = 10;
+			char4Health = 10;
+			char5Health = 10;
+			cowHealth = 50;
+			backg.drawString("You Died"  , 80, 220);
+			if(gold >=30)
+			{
+				gold -= 30;
+			}
+			if(gold < 30)
+			{
+				gold =0;
+			}
+		}
+		backg.setColor(Color.black);
+		//Character
+		if(Down == true)
+		{
+			backg.drawImage(Char1, ballX,ballY,this);
+		}
+		if(Left == true)
+		{
+			backg.drawImage(Char1Left, ballX,ballY,this);
+		}
+		if(Right == true)
+		{
+			backg.drawImage(Char1Right, ballX,ballY,this);
+		}
+		if(Up == true)
+		{
+			backg.drawImage(Char1Up, ballX,ballY,this);
+		}
+		
+		
+		//food
+//		g.drawImage(sword, Food1X,Food1Y,this);
+//		if(ballX == 90 && ballY == 120)
+//		{
+//			g.drawString("You Got a Sword!"  , 120, 50);
+//			Food1X += 600;
+//			Food1Y += 600;
+//		}
+	if(mouseDown)
+	{}
+	else
+	{}
+ 
+	//drawImage draws the Backbuffer image to the screen at (0,0)
+     g.drawImage(backbuffer, 0, 0, this);
+     //if we want to continually update the canvas, we need to:
+     repaint();
+}
+	public void paint(Graphics g)
+	{
+		update(g);
+	}
+	public void keyTyped(KeyEvent e )
+	{
+		requestFocus();
+		char c = e.getKeyChar();
+		showStatus("letter: " + c); 
+      	
+  		if(c=='a')
+  		{
+  			if(moving == true)
+  			{
+  				moves++;
+  			}
+  			if(moving == false)
+  			{
+  				moves = 0;
+  			}
+			ballX-=offset;
+			Up = false;
+			Right = false;
+			Left = true;
+			Down = false;
+			far2 = false;
+			far3 = false;	
+			far4 = false;	
+			far5 = false;
+  		}
+  		else if(c=='w')
+  		{
+  			if(moving == true)
+  			{
+  				moves++;
+  			}
+  			if(moving == false)
+  			{
+  				moves = 0;
+  			}
+			ballY-= offset;
+			Up = true;
+			Right = false;
+			Left = false;
+			Down = false;
+			far2 = false;
+			far3 = false;	
+			far4 = false;	
+			far5 = false;
+  		}
+  		else if(c=='d')
+  		{
+  			if(moving == true)
+  			{
+  				moves++;
+  			}
+  			if(moving == false)
+  			{
+  			moves = 0;
+  			}
+			ballX+=offset;
+			Up = false;
+			Right = true;
+			Left = false;
+			Down = false;
+			far2 = false;
+			far3 = false;
+			far4 = false;
+			far5 = false;
+	  	}
+	  	else if(c=='s')
+	  	{
+	  		if(moving == true)
+  			{
+  				moves++;
+  			}
+  			if(moving == false)
+  			{
+  				moves = 0;
+  			}
+			ballY+=offset;
+			Up = false;
+			Right = false;
+			Left = false;
+			Down = true;
+			far2 = false;
+			far3 = false;	
+			far4 = false;	
+			far5 = false;
+		}
+	  	else if(c=='p')
+	  	{
+  			if(potions >= 1 && health <= (maxHealth))
+  			{
+  				health += 30;
+  				potions --;
+  				if(health >= maxHealth)
+  				{
+  					health = maxHealth;
+  				}
+  			}
+  		}
+  		else if(c=='1' && buy == true)
+  		{
+  			potions++;
+  			gold -= 30;
+  			buy = false;
+  			trade = false;
+  		}
+  		else if(c=='2' && buy == true && sword == false)
+  		{
+  			//sword
+  			charattack += 2;
+  			gold -= 30;
+  			buy = false;
+  			trade = false;
+  		}
+  		else if(c=='3' && buy == true && sheild == false)
+  		{
+  			health += 5;
+  			gold -= 30;
+  			buy = false;
+  			trade = false;
+  		}
+  		
+  			else if(c=='n'&& buy == true)
+  		{
+  			buy = false;
+  			trade = false;
+  		}
+		e.consume();
+  		repaint();
+	}
+    public void keyReleased( KeyEvent e )
+    {	
+   	}
+    public void keyPressed( KeyEvent e )
+    {
+      	
+    }
+}
